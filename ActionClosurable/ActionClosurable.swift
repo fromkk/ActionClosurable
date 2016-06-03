@@ -10,8 +10,8 @@ import Foundation
 
 public class Actor<T> {
     @objc func act(sender: AnyObject) { closure(sender as! T) }
-    private let closure: T -> Void
-    init(_ closure: T -> Void) {
+    private let closure: (T) -> Void
+    init(_ closure: (T) -> Void) {
         self.closure = closure
     }
 }
@@ -32,15 +32,15 @@ func register<T>(actor: Actor<T>, to object: AnyObject) {
 
 public protocol ActionClosurable {}
 public extension ActionClosurable where Self: AnyObject {
-    public func registerClosure(closure: Self -> Void, @noescape configure: (Actor<Self>, Selector) -> Void) {
+    public func registerClosure(closure: (Self) -> Void, configure: @noescape(Actor<Self>, Selector) -> Void) {
         let actor = Actor(closure)
-        configure(actor, #selector(Actor<AnyObject>.act(_:)))
-        register(actor, to: self)
+        configure(actor, #selector(Actor<AnyObject>.act(sender:)))
+        register(actor: actor, to: self)
     }
-    public static func registerClosure(closure: Self -> Void, @noescape configure: (Actor<Self>, Selector) -> Self) -> Self {
+    public static func registerClosure(closure: (Self) -> Void, configure: @noescape(Actor<Self>, Selector) -> Self) -> Self {
         let actor = Actor(closure)
-        let instance = configure(actor, #selector(Actor<AnyObject>.act(_:)))
-        register(actor, to: instance)
+        let instance = configure(actor, #selector(Actor<AnyObject>.act(sender:)))
+        register(actor: actor, to: instance)
         return instance
     }
 }

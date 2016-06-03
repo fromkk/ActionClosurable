@@ -10,7 +10,7 @@ import UIKit
 import ActionClosurable
 
 class ViewController: UIViewController {
-    var button: UIButton? = UIButton(frame: CGRect(x: 0,y: 70,width: 100,height: 100))
+    var button: UIButton? = UIButton(frame: CGRect(x: 0, y: 70, width: 100, height: 100))
     var gr: UITapGestureRecognizer? = UITapGestureRecognizer()
     var timer: NSTimer?
 
@@ -19,21 +19,21 @@ class ViewController: UIViewController {
 
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 20, height: 20), false, 0)
         let contextImg = UIGraphicsGetCurrentContext()
-        CGContextSetRGBFillColor(contextImg,1,1,1,1)
-        CGContextFillRect(contextImg, CGRect(x: 0, y: 0, width: 20, height: 20))
+        contextImg?.setFillColor(red: 1, green: 1, blue: 1, alpha: 1)
+        contextImg?.fill(CGRect(x: 0, y: 0, width: 20, height: 20))
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
 
         navigationItem.rightBarButtonItems = [
-            UIBarButtonItem(title: "title", style: .Plain, closure: { _ in
+            UIBarButtonItem(title: "title", style: .plain, closure: { _ in
                 print("barButtonItem title")
             }),
-            UIBarButtonItem(image: image, style: .Plain, closure: { _ in
+            UIBarButtonItem(image: image, style: .plain, closure: { _ in
                 print("barButtonItem image")
             }),
         ]
-        button?.setTitle("button", forState: .Normal)
-        button?.backgroundColor = UIColor.redColor()
+        button?.setTitle("button", for: [])
+        button?.backgroundColor = UIColor.red()
         self.view.addSubview(button!)
 
         button?.onTap { [weak self] in
@@ -42,7 +42,7 @@ class ViewController: UIViewController {
             self!.button = nil
         }
 
-        button?.on(.TouchDown) {
+        button?.on(controlEvents: .touchDown) {
             print($0)
         }
 
@@ -55,14 +55,14 @@ class ViewController: UIViewController {
 
         let label = UILabel(frame: CGRect(x: 0, y: 300, width: 200, height: 20))
         label.text = "hogehoge"
-        label.userInteractionEnabled = true
+        label.isUserInteractionEnabled = true
         self.view.addSubview(label)
         label.addGestureRecognizer(UIPanGestureRecognizer { gr in
             print("UIPanGestureRecognizer fire")
         })
 
         var i = 5
-        timer = NSTimer.scheduledTimerWithTimeInterval(1, repeats: true) { [weak self] timer in
+        timer = NSTimer.scheduledTimerWithTimeInterval(ti: 1, repeats: true) { [weak self] timer in
             print("timer", i)
             i -= 1
             if i <= 0 {
@@ -72,4 +72,3 @@ class ViewController: UIViewController {
         }
     }
 }
-
