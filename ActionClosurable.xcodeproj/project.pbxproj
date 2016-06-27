@@ -272,6 +272,8 @@
 					};
 					B6554A291CC24F3D0060DC4B = {
 						CreatedOnToolsVersion = 7.3;
+						DevelopmentTeam = K84E4S7G4C;
+						DevelopmentTeamName = "Kazuya Ueoka";
 					};
 					B6554A4A1CC25F320060DC4B = {
 						CreatedOnToolsVersion = 7.3;
@@ -449,6 +451,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -487,6 +490,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
