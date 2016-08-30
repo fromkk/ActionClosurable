@@ -33,7 +33,7 @@ class ViewController: UIViewController {
             }),
         ]
         button?.setTitle("button", for: UIControlState())
-        button?.backgroundColor = UIColor.red()
+        button?.backgroundColor = UIColor.red
         self.view.addSubview(button!)
 
         button?.onTap { [weak self] in

@@ -9,15 +9,16 @@
 import Foundation
 
 public class Actor<T> {
+    typealias ActorClosure = (T) -> Void
     @objc func act(_ sender: AnyObject) { closure(sender as! T) }
-    private let closure: (T) -> Void
-    init(_ closure: (T) -> Void) {
+    private let closure: ActorClosure
+    init(_ closure: ActorClosure) {
         self.closure = closure
     }
 }
 
-private class GreenRoom {
-    private var actors: [Any] = []
+fileprivate class GreenRoom {
+    fileprivate var actors: [Any] = []
 }
 private var GreenRoomKey: UInt32 = 893
 
@@ -32,12 +33,13 @@ func register<T>(_ actor: Actor<T>, to object: AnyObject) {
 
 public protocol ActionClosurable {}
 public extension ActionClosurable where Self: AnyObject {
-    public func registerClosure(_ closure: (Self) -> Void, configure: @noescape(Actor<Self>, Selector) -> Void) {
+    typealias ActionClosure = (Self) -> Void
+    public func registerClosure(_ closure: ActionClosure, configure: (Actor<Self>, Selector) -> Void) {
         let actor = Actor(closure)
         configure(actor, #selector(Actor<AnyObject>.act(_:)))
         register(actor, to: self)
     }
-    public static func registerClosure(_ closure: (Self) -> Void, configure: @noescape(Actor<Self>, Selector) -> Self) -> Self {
+    public static func registerClosure(_ closure: ActionClosure, configure: (Actor<Self>, Selector) -> Self) -> Self {
         let actor = Actor(closure)
         let instance = configure(actor, #selector(Actor<AnyObject>.act(_:)))
         register(actor, to: instance)
